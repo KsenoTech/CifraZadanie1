@@ -1,0 +1,5 @@
+﻿WebSocketServer/bin
+WebSocketClient/bin
+WebSocketClient/obj
+WebSocketServer/obj
+.vs
