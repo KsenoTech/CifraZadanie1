@@ -1,7 +1,7 @@
 ﻿(string host, int port) = ReadConnection();
 
 string serverUri = $"ws://{host}:{port}/";
-var client = new WebSocketClient.WebSocketClient.Client(serverUri);
+var client = new WebSocketClient.WebSocketClient.ClientWebSocket(serverUri);
 
 await client.Connect();
 
@@ -11,12 +11,19 @@ while (true)
 {
     var message = Console.ReadLine();
 
-    if (message.ToLower() == "exit")
-        break;
-    else
-        await client.SendMessageAsync(message);
+    if (message != null)
+    {
+        if (message.ToLower() == "exit")
+            break; 
+        else
+            await client.SendMessageAsync(message);
+    } else
+        Console.Write("Message is null");
 }
 
+Console.WriteLine("Connected clients count:");
+var count = client.GetConnectedClientsCount().Result;
+Console.WriteLine(count);
 
 Console.WriteLine("Client stopped.");
 
@@ -24,6 +31,11 @@ static (string host, int port) ReadConnection()
 {
     Console.Write("Host: ");
     var host = Console.ReadLine();
+    while (host == null)
+    {
+        Console.Write("Please enter host: ");
+        host = Console.ReadLine();
+    }
 
     Console.Write("Port: ");
 

@@ -1,9 +1,7 @@
 ﻿
-using WebSocketServer.WebSocketServer;
-
 (string host, int port) = ReadConnection();
 
-var server = new Server($"http://{host}:{port}/");
+var server = new WebSocketServer.WebSocketServer.WebSocketServer($"http://{host}:{port}/");
 
 server.Start();
 
